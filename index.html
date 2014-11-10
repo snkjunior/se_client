@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <title>Исследователи миров</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body { background-color: #000000; }
+            canvas { background-color: #222222; }
+        </style>
+        <script src="js/objects/Hex.js"></script>
+        <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="js/libs/jquery.mousewheel.min.js"></script>
+        
+        <script src="js/objects/Map.js"></script>
+        <script src="js/objects/Hex.js"></script>
+    </head>
+    <body onload="init()">
+        <script src="js/libs/pixi.js"></script>
+        <div align="center">
+            <canvas id="map_canvas"></canvas>
+        </div>
+        <script>
+            var game = {
+                textures: {},
+                selectedLocation: null,
+                map: {},
+                scale: 1,
+                updateScale: function(scale) {
+                    game.scale += 0.5 * scale;
+                    if (game.scale > 2) {
+                        game.scale = 2;
+                    }
+                    if (game.scale < 0.5) {
+                        game.scale = 0.5;
+                    }
+                    
+                    game.map.updateMapScale();
+                }
+            };
+            
+            
+            
+            function init() {
+                $(document).on('mousewheel', function(event) {
+                    game.updateScale(event.deltaY);
+                });
+                    
+                
+                
+                var stage = new PIXI.Stage(0x222222, true);
+                var renderer = PIXI.autoDetectRenderer(1366, 768, {view: document.getElementById("map_canvas")});
+                
+                game.textures.neutral = PIXI.Texture.fromImage("img/hex_neutral.png");
+                game.textures.enemy = PIXI.Texture.fromImage("img/hex_enemy.png");
+                game.textures.my = PIXI.Texture.fromImage("img/hex_my.png");
+                game.textures.selected = PIXI.Texture.fromImage("img/hex_selected.png");
+
+                game.map = new Map(12, 6);
+                
+                stage.addChild(game.map.mapContainer);
+                requestAnimFrame(animate);
+                
+                function animate() {
+                    requestAnimFrame( animate );
+
+                    renderer.render(stage);
+                }
+            }
+        </script>
+    </body>
+</html>
