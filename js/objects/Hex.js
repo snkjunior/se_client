@@ -15,12 +15,12 @@ var Hex = (function(x, y, owner) {
 
     hex.getTextureByOwner = function() {
         if (this.owner == 0) {
-            return game.textures.neutral;
+            return game.textures.hex_neutral;
         }
         if (this.owner == -1) {
-            return game.textures.enemy;
+            return game.textures.hex_enemy;
         }
-        return game.textures.my;
+        return game.textures.hex_my;
     };
 
     var sprite = new PIXI.Sprite(hex.getTextureByOwner());
@@ -47,14 +47,13 @@ var Hex = (function(x, y, owner) {
             } 
             else {
                 game.selectedLocation = hex;
-                this.setTexture(game.textures.selected);
+                this.setTexture(game.textures.hex_selected);
             }
         } 
         else {
             game.selectedLocation = hex;
-            this.setTexture(game.textures.selected);
+            this.setTexture(game.textures.hex_selected);
         }
-
     };
 
     hex.sprite = sprite;

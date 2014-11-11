@@ -1,5 +1,6 @@
 var Map = (function(dx, dy) {
     var map = {
+        scale: 1,
         dx: dx,
         dy: dy,
         locations: {},
@@ -8,15 +9,15 @@ var Map = (function(dx, dy) {
     };
     
     map.getWidth = function() {
-        return 16 * game.scale + this.dx * 48 * game.scale;
+        return 16 * this.scale + this.dx * 48 * this.scale;
     };
     
     map.getHeight = function() {
-        return 32 * game.scale + this.dy * 64 * game.scale;
+        return 32 * this.scale + this.dy * 64 * this.scale;
     };
     
     map.updateMapScale = function() {
-        locationsContainer.scale.x = locationsContainer.scale.y = game.scale;
+        locationsContainer.scale.x = locationsContainer.scale.y = this.scale;
         
         if (map.getWidth() <= 1366) {
             locationsContainer.position.x = (1366 - map.getWidth()) / 2;
