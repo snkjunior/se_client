@@ -18,7 +18,9 @@ game.server = {
         authKey: null,
         
         events: {
-            auth: null
+            initMission: null,
+            startBattle: null,
+            test: null
         }
     }
 };
@@ -27,13 +29,13 @@ game.server.init = function() {
     this.loadEvents("main");
     this.loadEvents("mission");
     
-    this.connectToMainServer();
+    //this.connectToMainServer();
 };
 
 game.server.loadEvents = function(serverType) {
     for (var eventName in this[serverType].events) {
         var script = document.createElement("script");
-        script.src = "/js/serverEvents/" + serverType + "/" + eventName + ".js";
+        script.src = "/js/serverEvents/" + serverType + "/" + eventName + ".js?" + new Date().getTime();
         document.getElementsByTagName('head')[0].appendChild(script);
     }
 };
@@ -78,9 +80,11 @@ game.server.connectToMissionServer = function(ip, port, mId, authKey) {
 
 game.server.bindEventsToSocket = function(socket, serverType) {
     for (var eventName in this[serverType].events) {
-        socket.on(eventName, function(data) {
-            game.server[serverType].events[eventName](data, socket);
-        });
+        socket.on(eventName, game.server[serverType].events[eventName]);
     }
+};
+
+game.server.sendMessage = function(serverType, event, data) {
+    this[serverType].socket.emit(event, data);
 };
 

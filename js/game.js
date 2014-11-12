@@ -1,6 +1,7 @@
 var game = {
     playerId: 1,
-    map: null,
+    mPlayerId: null,
+    mission: null,
     
     pixi: {
         renderer: null,
@@ -10,19 +11,19 @@ var game = {
         hex_neutral: null,
         hex_enemy: null,
         hex_my: null,
-        hex_selected: null
+        hex_selected: null,
+        building_1: null,
+        units: null
     }
 };
 
 game.init = function() {
-    //this.server.init();
+    this.server.init();
     this.initPixi(1366, 768);
     this.loadTextures();
-    this.initMap();
-    
-    var someHex = new PIXI.Sprite(this.textures.hex_my);
-    
     requestAnimFrame(game.animateFrame);
+    
+    game.server.connectToMissionServer('127.0.0.11', 8000, 1, 'asdzx197sdik1pza');
 };
 
 game.initPixi = function(widht, height) {
@@ -36,9 +37,17 @@ game.loadTextures = function() {
     }
 };
 
-game.initMap = function(mapData) {
-    this.map = new Map(12, 6);
-    this.pixi.stage.addChild(this.map.mapContainer);
+game.initMission = function(missionData) {
+    for (var mPlayerId in missionData.playersMap) {
+        if (missionData.playersMap[mPlayerId].playerId == this.playerId) {
+            this.mPlayerId = mPlayerId;
+        }
+    }
+    
+    this.mission = new Mission(missionData);
+    this.pixi.stage.addChild(this.mission.mapContainer);
+    
+    return true;
 };
 
 game.animateFrame = function() {
