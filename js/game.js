@@ -13,7 +13,11 @@ var game = {
         hex_my: null,
         hex_selected: null,
         building_1: null,
-        units: null
+        units: null,
+        attack: null,
+        button_build: null,
+        button_move: null,
+        button_turn: null
     }
 };
 
@@ -45,6 +49,7 @@ game.initMission = function(missionData) {
     }
     
     this.mission = new Mission(missionData);
+    this.mission.init();
     this.pixi.stage.addChild(this.mission.mapContainer);
     
     return true;
