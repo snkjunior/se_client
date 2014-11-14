@@ -13,6 +13,12 @@ var Mission = (function(missionData) {
         scale: 1,
         locationsContainer: null,
         mapContainer: null,
+        currentPlayerTurn: {
+            mPlayerId: null,
+            timer: {
+                
+            }
+        },
         
         buttons: {
             build: null,

@@ -1,5 +1,5 @@
 var game = {
-    playerId: 1,
+    playerId: null,
     mPlayerId: null,
     mission: null,
     
@@ -21,17 +21,24 @@ var game = {
     }
 };
 
-game.init = function() {
+game.init = function(playerId) {
+    this.playerId = playerId;
+    
     this.server.init();
     this.initPixi(1366, 768);
     this.loadTextures();
     requestAnimFrame(game.animateFrame);
     
-    game.server.connectToMissionServer('127.0.0.11', 8000, 1, 'asdzx197sdik1pza');
+    var authKey = "asdzx197sdik1pza";
+    if (playerId == 2) {
+        authKey = "asdzx197sdik1pz2";        
+    }
+    game.server.connectToMissionServer('127.0.0.11', 8000, 1, authKey);
 };
 
 game.initPixi = function(widht, height) {
     this.pixi.renderer = PIXI.autoDetectRenderer(1366, 768, {view: document.getElementById("map_canvas")});
+    $("#map_canvas").show();
     this.pixi.stage = new PIXI.Stage(0x222222, true);
 };
 
