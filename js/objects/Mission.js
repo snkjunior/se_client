@@ -26,20 +26,25 @@ var Mission = (function(missionData) {
             turn: null
         },
         
-        actions: {}
+        actions: {
+            build: {},
+            move: {},
+            turn: {}
+        }
     };
 
     mission.addAction = function(type, info) {
         if (!mission.selectedLocation)
             return false;
         
-        if (!mission.actions[mission.selectedLocation.x + "x" + mission.selectedLocation.y])
-            mission.actions[mission.selectedLocation.x + "x" + mission.selectedLocation.y] = {};
+        if (mission.actions[type][mission.selectedLocation.x + "x" + mission.selectedLocation.y] == null)
+            mission.actions[type][mission.selectedLocation.x + "x" + mission.selectedLocation.y] = {};
         
-        if (!mission.actions[mission.selectedLocation.x + "x" + mission.selectedLocation.y][type])
-            mission.actions[mission.selectedLocation.x + "x" + mission.selectedLocation.y][type] = [];
-        
-        mission.actions[mission.selectedLocation.x + "x" + mission.selectedLocation.y][type].push(info);
+        if (type != 'move') {
+            mission.actions[type][mission.selectedLocation.x + "x" + mission.selectedLocation.y] = info;
+        } else {
+            mission.actions[type][mission.selectedLocation.x + "x" + mission.selectedLocation.y][info.endLocationId] = info.units;
+        }
     };
 
     mission.getMapPlayerId = function(playerId) {

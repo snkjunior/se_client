@@ -20,6 +20,7 @@ game.server = {
         events: {
             initMission: null,
             startBattle: null,
+            newTurn: null,
             test: null
         }
     }

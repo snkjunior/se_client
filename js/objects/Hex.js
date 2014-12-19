@@ -82,16 +82,14 @@ var Hex = (function(locationId, locationInfo) {
             return {};
         
         var actionUnits = {};
-        if (game.mission.actions[hex.x + "x" + hex.y]) {
-            if (game.mission.actions[hex.x + "x" + hex.y].move) {
-                for (var i = 0; i < game.mission.actions[hex.x + "x" + hex.y].move.length; i++) {
-                    var moveAction = game.mission.actions[hex.x + "x" + hex.y].move[i];
-                    for (var unitId in moveAction.units) {
-                        if (!actionUnits[unitId]) {
-                            actionUnits[unitId] = 0;
-                        }
-                        actionUnits[unitId] += moveAction.units[unitId];
+        if (game.mission.actions.move[hex.x + "x" + hex.y]) {
+            for (var endLocationId in game.mission.actions.move[hex.x + "x" + hex.y]) {
+                var units = game.mission.actions.move[hex.x + "x" + hex.y][endLocationId];
+                for (var unitId in units) {
+                    if (!actionUnits[unitId]) {
+                        actionUnits[unitId] = 0;
                     }
+                    actionUnits[unitId] += units[unitId];
                 }
             }
         }
@@ -110,6 +108,34 @@ var Hex = (function(locationId, locationInfo) {
         }
         
         return noActionUnits;
+    };
+    
+    hex.updateUnits = function(playerUnits) {
+        for (var mPlayerId in playerUnits) {
+            if (hex.units[mPlayerId] == null) {
+                hex.units[mPlayerId] = {};
+            }
+            for (var unitId in playerUnits[mPlayerId]) {
+                if (hex.units[mPlayerId][unitId] == null) {
+                    hex.units[mPlayerId][unitId] = 0;
+                }
+                hex.units[mPlayerId][unitId] += playerUnits[mPlayerId][unitId];
+                if (hex.units[mPlayerId][unitId] == 0) {
+                    delete hex.units[mPlayerId][unitId];
+                }
+            }
+            
+            if (Object.keys(hex.units[mPlayerId]).length == 0) {
+                delete hex.units[mPlayerId];
+            }
+        }
+        
+        hex.showUnitsSprite();
+    };
+    
+    hex.setOwner = function(newOwnerId) {
+        hex.ownerId = newOwnerId;
+        hex.sprite.setTexture(hex.getTextureByOwner());
     };
 
     var sprite = new PIXI.Sprite(hex.getTextureByOwner());
@@ -132,10 +158,7 @@ var Hex = (function(locationId, locationInfo) {
         if (hex.moveSprite != null) {
             game.mission.addAction("move", {
                 units: game.mission.selectedLocation.units[game.mPlayerId],
-                destination: {
-                    x: hex.x,
-                    y: hex.y
-                }
+                endLocationId: hex.x + "x" + hex.y
             });
             alert("Войска выдвинулись в локацию ("+hex.x+";"+hex.y+").");
             game.mission.setMoveMode(false);
