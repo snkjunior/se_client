@@ -140,10 +140,9 @@ var Hex = (function(locationId, locationInfo) {
 
     var sprite = new PIXI.Sprite(hex.getTextureByOwner());
     sprite.interactive = true;   
-
     sprite.anchor.x = 0.5;
-    sprite.anchor.y = 0.5;
-    
+    sprite.anchor.y = 0.5;    
+    sprite.hitArea = new PIXI.Circle(0, 0, 32);
     if (hex.x % 2 == 0) {
         sprite.position.x = 32 + hex.x * 48;
         sprite.position.y = 32 + hex.y * 64;
@@ -152,8 +151,6 @@ var Hex = (function(locationId, locationInfo) {
         sprite.position.y = 64 + hex.y * 64;
     }  
     
-    sprite.hitArea = new PIXI.Circle(0, 0, 32);
-
     sprite.click = function(data) {
         if (hex.moveSprite != null) {
             game.mission.addAction("move", {
@@ -187,6 +184,8 @@ var Hex = (function(locationId, locationInfo) {
         }
     };
     
+    hex.sprite = sprite;
+    
     if (hex.buildingId) {
         var buildingSprite = new PIXI.Sprite(game.textures["building_" + hex.buildingId]);
         buildingSprite.anchor.x = 0.5;
@@ -197,8 +196,6 @@ var Hex = (function(locationId, locationInfo) {
         
         hex.buildingSprite = buildingSprite;
     }
-    
-    hex.sprite = sprite;
 
     return hex;
 });
