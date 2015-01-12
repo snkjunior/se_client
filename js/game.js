@@ -2,7 +2,6 @@ var game = {
     playerId: null,
     mPlayerId: null,
     mission: null,
-    
     pixi: {
         renderer: null,
         stage: null
@@ -18,22 +17,30 @@ var game = {
         button_build: null,
         button_move: null,
         button_turn: null
-    }
+    },
+    
+    currentInterface: null,
+    interfaces: {}
 };
 
 game.init = function(playerId) {
-    this.playerId = playerId;
+    game.initTemplates();
     
-    this.server.init();
-    this.initPixi(1366, 768);
-    this.loadTextures();
-    requestAnimFrame(game.animateFrame);
-    
-    var authKey = "asdzx197sdik1pza";
-    if (playerId == 2) {
-        authKey = "asdzx197sdik1pz2";        
-    }
-    game.server.connectToMissionServer('127.0.0.11', 8000, 1, authKey);
+//    this.playerId = playerId;
+//    
+//    this.server.init();
+//    this.initPixi(1366, 768);
+//    this.loadTextures();
+//    requestAnimFrame(game.animateFrame);
+//    
+//    var authKey = "asdzx197sdik1pza";
+//    if (playerId == 2) {
+//        authKey = "asdzx197sdik1pz2";        
+//    }
+//    game.server.connectToMissionServer('127.0.0.11', 8000, 1, authKey);
+//
+
+    game.showInterface('moveUnits', {});
 };
 
 game.initPixi = function(widht, height) {
@@ -60,6 +67,30 @@ game.initMission = function(missionData) {
     this.pixi.stage.addChild(this.mission.mapContainer);
     
     return true;
+};
+
+game.initTemplates = function() {
+    for (var name in this.interfaces) {
+        $.ajax({
+            url: "templates/" + name + ".html",
+            async: false,
+            cache: false,
+            success: function(html) {
+                game.interfaces[name].template = html;
+            }
+        });
+    }
+};
+
+game.showInterface = function(interfaceName, params) {
+    game.currentInterface = game.interfaces[interfaceName];
+    $("#interface").html(game.currentInterface.template);
+    game.currentInterface.init(function() {
+        ko.renderTemplate('interface', game.currentInterface, {}, document.getElementById('interface'));
+        if (game.currentInterface.onReady != null) {
+            game.currentInterface.onReady();
+        }
+    }, params);
 };
 
 game.animateFrame = function() {

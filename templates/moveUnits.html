@@ -1,0 +1,55 @@
+<div class="unitMoveTemplate">
+    <div>
+        <div class="unitMoveHeader" style="margin-top: 10px"><b>Отправка юнитов</b></div>
+        <div style="margin-top: 15px;" data-bind="attr: {class: 'unitList ' + (unitsInLocation().length > 7 ? 'unitListWithScroll' : '')}">
+            <div data-bind="style: {width: 100 * unitsInLocation().length + 'px'}">
+                <!--ko foreach: unitsInLocation()-->
+                <div class="unit" data-bind="click: $parent.clickOnUnit">  
+                    <div class="unitId" data-bind="text: unitId"></div>
+                    <div class="unitCount" data-bind="text: count"></div>
+                </div>
+                <!--/ko-->
+            </div>
+        </div>
+        <div style="margin-top: 15px">
+            <button>↓↓↓↓</button>
+            <button>↑↑↑↑</button>
+        </div>
+        <div style="margin-top: 15px" data-bind="attr: {class: 'unitList ' + (unitsToMove().length > 7 ? 'unitListWithScroll' : '')}">
+            <div data-bind="css: {width: 100 * unitsToMove().length + 'px'}">
+                <!--ko foreach: unitsToMove()-->
+                <div class="unit" data-bind="click: $parent.clickOnUnit">                            
+                    <div class="unitId" data-bind="text: unitId"></div>
+                    <div class="unitCount" data-bind="text: count"></div>
+                </div>
+                <!--/ko-->
+            </div>
+        </div>
+        <div style="margin-top: 30px">
+            <button class="main">Подтвердить</button>
+            <button class="main">Назад</button>
+        </div>
+    </div>
+
+    <!--ko with: selectUnitCountPopup-->
+    <!--ko if: isShow()-->
+    <div class="selectUnitCountPopup">
+        <div class="unitMoveHeader" style="margin-top: 10px"><b>Выберите количество бойцов</b></div>
+        <div style="margin-top: 20px">
+            <div>
+                <div class="selectunitCountPopup_unitLocation" style="margin-right: 75px;">Гарнизон</div>
+                <div class="selectunitCountPopup_unitLocation" style="margin-left: 75px;">Отряд</div>
+            </div>
+            <div style="margin-top: 5px">
+                <div class="selectunitCountPopup_unitCount" data-bind="text: unitsInLocation()"></div>
+                <div class="unitCountSlider" style="display: inline-block"></div>
+                <div class="selectunitCountPopup_unitCount" data-bind="text: unitsToMove()"></div>
+            </div>
+        </div>
+        <div style="margin-top: 30px">
+            <button class="main" data-bind="click: $parent.clickApplyUnitCount">Подтвердить</button>
+        </div>
+    </div>
+    <!--/ko-->
+    <!--/ko-->
+</div>

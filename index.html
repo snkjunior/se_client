@@ -4,27 +4,35 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Cache-Control" content="no-cache">
-        <style>
-            body { background-color: #000000; }
-            canvas { background-color: #222222; }
-        </style>
+        
+        <link href="css/main.css" rel="stylesheet">
+        <link href="css/unitMove.css" rel="stylesheet">
+        <link href="css/jquery.jscrollpane.css" rel="stylesheet">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
         
         <script src="js/libs/pixi.js"></script>
+        <script src="js/libs/knockout-3.2.0.min.js"></script>
         <script src="js/libs/socket.io/socket.io.js"></script>
         
-        <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+        <script src="js/libs/jquery.jscrollpane.min.js"></script>
         <script src="js/libs/jquery.mousewheel.min.js"></script>
         
-        <script src="js/main.js"></script>
-        <script src="js/game.js"></script>
-        <script src="js/server.js"></script>
         
-        <script src="js/objects/Mission.js"></script>
-        <script src="js/objects/Hex.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/game.js"></script>
+        <script type="text/javascript" src="js/server.js"></script>
+        
+        <script type="text/javascript" src="js/interfaces/moveUnits.js"></script>
+        
+        <script type="text/javascript" src="js/objects/Mission.js"></script>
+        <script type="text/javascript" src="js/objects/Hex.js"></script>
     </head>
     <body onload="main()">
-        <div align="center">
+        <div align="center" style="position: absolute; width: 1366px; height: 768px;">
             <canvas id="map_canvas" style="display: none" oncontextmenu="return false;"></canvas>
+            <div id="interface" style="position: absolute; top: 0px; left: 0px"></div>
         </div>
     </body>
 </html>
