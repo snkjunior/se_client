@@ -4,7 +4,7 @@
         <div style="margin-top: 15px;" data-bind="attr: {class: 'unitList ' + (unitsInLocation().length > 7 ? 'unitListWithScroll' : '')}">
             <div data-bind="style: {width: 100 * unitsInLocation().length + 'px'}">
                 <!--ko foreach: unitsInLocation()-->
-                <div class="unit" data-bind="click: $parent.clickOnUnit">  
+                <div class="unit" data-bind="click: $parent.clickOnUnit, style: {background: 'url(../img/units/'+unitId+'.png)'}">  
                     <div class="unitId" data-bind="text: unitId"></div>
                     <div class="unitCount" data-bind="text: count"></div>
                 </div>
@@ -18,7 +18,7 @@
         <div style="margin-top: 15px" data-bind="attr: {class: 'unitList ' + (unitsToMove().length > 7 ? 'unitListWithScroll' : '')}">
             <div data-bind="css: {width: 100 * unitsToMove().length + 'px'}">
                 <!--ko foreach: unitsToMove()-->
-                <div class="unit" data-bind="click: $parent.clickOnUnit">                            
+                <div class="unit" data-bind="click: $parent.clickOnUnit, style: {background: 'url(../img/units/'+unitId+'.png)'}">                            
                     <div class="unitId" data-bind="text: unitId"></div>
                     <div class="unitCount" data-bind="text: count"></div>
                 </div>

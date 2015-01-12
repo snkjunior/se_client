@@ -18,6 +18,13 @@ var game = {
         button_move: null,
         button_turn: null
     },
+    img: {
+        units: {
+            1: null,
+            2: null,
+            3: null
+        }
+    },
     
     currentInterface: null,
     interfaces: {}
@@ -39,6 +46,8 @@ game.init = function(playerId) {
 //    }
 //    game.server.connectToMissionServer('127.0.0.11', 8000, 1, authKey);
 //
+
+    game.initImages();
 
     game.showInterface('moveUnits', {});
 };
@@ -68,6 +77,27 @@ game.initMission = function(missionData) {
     
     return true;
 };
+
+game.initImages = function() {
+    for (var unitId in this.img.units) {
+        if (typeof document.body == "undefined") 
+            return;
+        try {
+            var div = document.createElement("div");
+            var s = div.style;
+                s.position = "absolute";
+            s.top = s.left = 0;
+            s.visibility = "hidden";
+            document.body.appendChild(div);
+            div.innerHTML = "<img src='img/units/"+unitId+".png' />";
+            var lastImg = div.lastChild;
+            lastImg.onload = function() { document.body.removeChild(document.body.lastChild); };
+         }
+         catch(e) {
+            // Error. Do nothing.
+        }
+    }
+}
 
 game.initTemplates = function() {
     for (var name in this.interfaces) {
