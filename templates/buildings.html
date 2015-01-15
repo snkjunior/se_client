@@ -1,0 +1,45 @@
+<div class="buildingsTemplate">
+    <div class="popupHeader" style="margin-top: 10px"><b>Здания на локации</b></div>
+    
+    <div style="width: 310px; text-align: left;">
+        <div class="buildingsTabMenu" style="margin-top: 10px;">
+            <!--ko foreach: tabs-->
+            <div data-bind="attr: {class: 'buildingsTab ' + ($parent.currentTab() == $data ? 'buildingsTab_selected' : '')}, click: $parent.clickOnTab"></div>
+             <!--/ko-->
+        </div>
+        
+        <div data-bind="attr: {class: 'buildingsList ' + (showBuildings().length > 3 ? 'buildingsListWithScroll' : '')}">
+            <div data-bind="style: {height: showBuildings().length* 100 + 'px'}">
+                <!--ko foreach: showBuildings()-->
+                <!--ko if: $parent.currentTab() == 'all' || $parent.currentTab() == type-->
+                <div class="building" data-bind="
+                    css: {
+                        'building_selected': $parent.selectedBuilding() != null && $parent.selectedBuilding().id == id,
+                        'building_disabled': game.gold() < price[0].value
+                    },
+                    click: $parent.clickOnBuilding"
+                >                            
+                    <div class="buildingImage" data-bind="style: {background: 'url(../img/buildings/'+id+'.png)'}"></div>
+                    <div class="buildingInfo">
+                        <div class="buildingName" data-bind="text: name"></div>
+
+                        <!--ko foreach: params-->
+                        <div class="buildingDescription" data-bind="text: description"></div>
+                        <!--/ko-->
+
+                        <!--ko foreach: price-->
+                        <div class="buildingPrice" data-bind="text: value"></div>
+                        <!--/ko-->
+                    </div>
+                </div>
+                <!--/ko-->
+                <!--/ko-->
+            </div>
+        </div>
+    </div>
+    
+    <div style="margin-top: 30px;">
+        <button class="main" data-bind="disable: selectedBuilding() == null">Построить</button>
+        <button class="main">Назад</button>
+    </div>
+</div>

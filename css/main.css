@@ -11,3 +11,8 @@ button.main {
     height: 40px;
     font-size: 14px;
 }
+
+div.popupHeader {
+    font-size: 20px;
+    color: #222222;
+}

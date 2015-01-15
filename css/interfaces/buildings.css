@@ -1,0 +1,99 @@
+div.buildingsTemplate {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #b09665;
+    width: 400px;
+    height: 500px;
+    border: 4px ridge #6d5a37;
+}
+
+div.buildingsTabMenu {
+    height: 40px;
+    text-align: left;
+}
+
+div.buildingsTab {
+    background-color: #725a2d; 
+    height: 30px;
+    width: 40px;
+    display: inline-block;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+div.buildingsTab_selected {
+    background-color: #b09665; 
+    height: 40px;
+}
+
+div.buildingsList {
+    left: 50px;
+    width: 300px;    
+    height: 300px;
+    background-color: #725a2d; 
+    overflow: hidden; 
+ //   border: 2px ridge #6d5a37;
+    text-align: left;
+}
+
+div.buildingsListWithScroll {
+    width: 310px;    
+}
+
+div.building {
+    background-color: #b09665;
+    width: 300px;
+    height: 100px;    
+    border: 1px ridge #000;
+    box-sizing: border-box;
+    cursor: pointer;    
+}
+
+div.building_selected {
+    background-color: #b07070;
+}
+
+div.building_disabled {
+    background-color: #666666;   
+    opacity: 0.5;
+}
+
+div.buildingImage {
+    width: 100px;
+    height: 100px;
+    background-size: 100px 100px !important;
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+div.buildingInfo {    
+    position: relative;
+    top: -50px;
+    height: 100px;
+    display: inline-block;
+    width: 180px;
+    margin-left: 10px;
+}
+
+div.buildingName {
+    height: 20px;
+    text-align: left;
+    font-size: 14px;
+    color: black;
+}
+
+div.buildingDescription {
+    text-align: left;
+    font-size: 12px;
+    color: black;
+}
+
+div.buildingPrice {
+    position: absolute;
+    font-size: 12px;
+    color: black;
+    bottom: 5px;
+    right: 0px;
+}

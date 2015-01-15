@@ -1,6 +1,9 @@
 var game = {
     playerId: null,
     mPlayerId: null,
+    gold: ko.observable(500),
+    
+    
     mission: null,
     pixi: {
         renderer: null,
@@ -49,7 +52,7 @@ game.init = function(playerId) {
 
     game.initImages();
 
-    game.showInterface('moveUnits', {});
+    game.showInterface('buildings', {});
 };
 
 game.initPixi = function(widht, height) {

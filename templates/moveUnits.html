@@ -1,6 +1,6 @@
 <div class="unitMoveTemplate">
     <div>
-        <div class="unitMoveHeader" style="margin-top: 10px"><b>Отправка юнитов</b></div>
+        <div class="popupHeader" style="margin-top: 10px"><b>Отправка юнитов</b></div>
         <div style="margin-top: 15px;" data-bind="attr: {class: 'unitList ' + (unitsInLocation().length > 7 ? 'unitListWithScroll' : '')}">
             <div data-bind="style: {width: 100 * unitsInLocation().length + 'px'}">
                 <!--ko foreach: unitsInLocation()-->
@@ -34,7 +34,7 @@
     <!--ko with: selectUnitCountPopup-->
     <!--ko if: isShow()-->
     <div class="selectUnitCountPopup">
-        <div class="unitMoveHeader" style="margin-top: 10px"><b>Выберите количество бойцов</b></div>
+        <div class="popupHeader" style="margin-top: 10px"><b>Выберите количество бойцов</b></div>
         <div style="margin-top: 20px">
             <div>
                 <div class="selectunitCountPopup_unitLocation" style="margin-right: 75px;">Гарнизон</div>
