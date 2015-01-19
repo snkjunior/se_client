@@ -34,25 +34,22 @@ var game = {
 };
 
 game.init = function(playerId) {
-    game.initTemplates();
+    this.initTemplates();
+    this.initImages();
     
-//    this.playerId = playerId;
-//    
-//    this.server.init();
-//    this.initPixi(1366, 768);
-//    this.loadTextures();
-//    requestAnimFrame(game.animateFrame);
-//    
-//    var authKey = "asdzx197sdik1pza";
-//    if (playerId == 2) {
-//        authKey = "asdzx197sdik1pz2";        
-//    }
-//    game.server.connectToMissionServer('127.0.0.11', 8000, 1, authKey);
-//
+    this.playerId = playerId;
+    this.server.init();
+    this.initPixi(1366, 768);
+    this.loadTextures();
+    requestAnimFrame(game.animateFrame);
+    
+    var authKey = "asdzx197sdik1pza";
+    if (playerId == 2) {
+        authKey = "asdzx197sdik1pz2";        
+    }
+    this.server.connectToMissionServer('127.0.0.11', 8000, 1, authKey);
 
-    game.initImages();
-
-    game.showInterface('buildings', {});
+//    this.showInterface('buildings', {});
 };
 
 game.initPixi = function(widht, height) {
@@ -125,6 +122,11 @@ game.showInterface = function(interfaceName, params) {
         }
     }, params);
 };
+
+game.hideInterface = function() {
+    game.currentInterface = null;
+    $("#interface").html('');
+}
 
 game.animateFrame = function() {
     requestAnimFrame(game.animateFrame);

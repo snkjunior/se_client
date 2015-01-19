@@ -1,6 +1,7 @@
 game.interfaces.moveUnits = {
     template: "",
     
+    targetLocation: null,
     unitsInLocation: ko.observableArray([]),
     unitsToMove: ko.observableArray([]),
     
@@ -33,14 +34,24 @@ game.interfaces.moveUnits = {
     },
     
     init: function(callback, params) {
-        this.unitsInLocation([
-            {unitId: 1, count: ko.observable(100)},
-            {unitId: 2, count: ko.observable(30)},
-            {unitId: 3, count: ko.observable(6)}
-        ]);
-        this.unitsToMove([
-            {unitId: 1, count: ko.observable(10)}
-        ]);
+        this.targetLocation = params.targetLocation;
+        this.unitsInLocation([]);
+        this.unitsToMove([]);
+        
+        for (var unitId in params.unitsInLocation) {
+            this.unitsInLocation().push({
+                unitId: unitId,
+                count: ko.observable(params.unitsInLocation[unitId])
+            });
+        }
+        
+        for (var unitId in params.unitsToMove) {
+            this.unitsToMove().push({
+                unitId: unitId,
+                count: ko.observable(params.unitsToMove[unitId])
+            });
+        }
+        
         callback();
     },
     
@@ -52,6 +63,32 @@ game.interfaces.moveUnits = {
         var self = game.currentInterface;
         var unitId = unit.unitId;
         self.selectUnitCountPopup.show(unitId, self.getUnitCountById(unitId, self.unitsInLocation()), self.getUnitCountById(unitId, self.unitsToMove()));
+    },
+    
+    clickApplyUnitsMove: function() {
+        var self = game.currentInterface;
+        
+        var units = {};
+        for (var i = 0; i < self.unitsToMove().length; i++) {
+            units[self.unitsToMove()[i].unitId] = self.unitsToMove()[i].count();
+        }
+        
+        console.log(units);
+        
+        game.mission.addAction("move", {
+            units: units,
+            endLocationId: self.targetLocation.x + "x" + self.targetLocation.y
+        });
+        console.log(1);
+        game.mission.setMoveMode(false);
+        game.mission.selectedLocation.showUnitsSprite();
+        game.mission.updateButtonsVisible(game.mission.selectedLocation.getButtonsVisible());
+        
+        game.hideInterface();
+    },
+    
+    clickCloseInterface: function() {
+        game.hideInterface();
     },
     
     clickApplyUnitCount: function() {

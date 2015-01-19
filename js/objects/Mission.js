@@ -77,20 +77,30 @@ var Mission = (function(missionData) {
     
     mission.hideButtons = function() {
         for (var buttonName in this.buttons) {
-            this.buttons[buttonName].visible = false;
+            console.log(1);
+            this.buttons[buttonName].interactive = false;
+            this.buttons[buttonName].alpha = 0.5;
         }
     };
     
     mission.updateButtonsVisible = function(buttonsVisible) {
-        var i = 0;
+//        var i = 0;
         for (var buttonName in buttonsVisible) {
             if (!this.buttons[buttonName])
                 continue;
             
-            this.buttons[buttonName].visible = buttonsVisible[buttonName];
-            if (this.buttons[buttonName].visible) {
-                this.buttons[buttonName].position.set(10, 10 + i * 50);
-                i++;
+//            this.buttons[buttonName].visible = buttonsVisible[buttonName];
+//            if (this.buttons[buttonName].visible) {
+//                this.buttons[buttonName].position.set(10, 10 + i * 50);
+//                i++;
+//            }
+
+            if (buttonsVisible[buttonName]) {
+                this.buttons[buttonName].interactive = true;
+                this.buttons[buttonName].alpha = 1;
+            } else {
+                this.buttons[buttonName].interactive = false;
+                this.buttons[buttonName].alpha = 0.5;
             }
         }
     };
@@ -257,17 +267,22 @@ var Mission = (function(missionData) {
 
         var buttonBuild = new PIXI.Sprite(game.textures.button_build);
         buttonBuild.position.set(10, 10);
-        buttonBuild.interactive = true;
+        //buttonBuild.interactive = true;
+        buttonBuild.alpha = 0.5;
         buttonBuild.buttonMode = true;
-        buttonBuild.visible = false;
+        //buttonBuild.visible = false;
+        buttonBuild.click = function() {
+            game.showInterface('buildings');
+        };
         mission.buttons.build = buttonBuild;
         mapContainer.addChild(buttonBuild);
 
         var buttonMove = new PIXI.Sprite(game.textures.button_move);
         buttonMove.position.set(10, 70);
-        buttonMove.interactive = true;
+        //buttonMove.interactive = true;
+        buttonMove.alpha = 0.5;
         buttonMove.buttonMode = true;
-        buttonMove.visible = false;
+        //buttonMove.visible = false;
         buttonMove.click = function() {
             mission.setMoveMode();
         };

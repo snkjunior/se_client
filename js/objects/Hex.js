@@ -32,11 +32,11 @@ var Hex = (function(locationId, locationInfo) {
     
     hex.getButtonsVisible = function() {
         var buttonsVisible = {
-            build: false,
-            move: false
+            move: false,
+            build: false
         };
         
-        if (hex.ownerId == game.mPlayerId && hex.buildingId == null && hex.resourceId != null) {
+        if (hex.ownerId == game.mPlayerId && !hex.buildingId) {
             buttonsVisible.build = true;
         }
         
@@ -110,6 +110,24 @@ var Hex = (function(locationId, locationInfo) {
         return noActionUnits;
     };
     
+    hex.getActionUnits = function(x, y) {
+        if (hex.ownerId != game.mPlayerId)
+            return {};
+        
+        var actionUnits = {};
+        if (game.mission.actions.move[hex.x + "x" + hex.y] && game.mission.actions.move[hex.x + "x" + hex.y][x + "x" + y]) {
+            var units = game.mission.actions.move[hex.x + "x" + hex.y][x + "x" + y];
+            for (var unitId in units) {
+                if (!actionUnits[unitId]) {
+                    actionUnits[unitId] = 0;
+                }
+                actionUnits[unitId] += units[unitId];
+            }
+        }
+        
+        return actionUnits;
+    };
+    
     hex.updateUnits = function(playerUnits) {
         for (var mPlayerId in playerUnits) {
             if (hex.units[mPlayerId] == null) {
@@ -153,14 +171,11 @@ var Hex = (function(locationId, locationInfo) {
     
     sprite.click = function(data) {
         if (hex.moveSprite != null) {
-            game.mission.addAction("move", {
-                units: game.mission.selectedLocation.units[game.mPlayerId],
-                endLocationId: hex.x + "x" + hex.y
+            game.showInterface('moveUnits', {
+                unitsInLocation: game.mission.selectedLocation.getNoActionUnits(),
+                unitsToMove: game.mission.selectedLocation.getActionUnits(hex.x, hex.y),
+                targetLocation: hex
             });
-            alert("Войска выдвинулись в локацию ("+hex.x+";"+hex.y+").");
-            game.mission.setMoveMode(false);
-            game.mission.selectedLocation.showUnitsSprite();
-            game.mission.updateButtonsVisible(game.mission.selectedLocation.getButtonsVisible());
             return;
         }
         
