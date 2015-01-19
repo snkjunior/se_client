@@ -17,6 +17,7 @@ var game = {
         building_1: null,
         units: null,
         attack: null,
+        move: null,
         button_build: null,
         button_move: null,
         button_turn: null

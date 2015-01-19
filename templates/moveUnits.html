@@ -12,8 +12,8 @@
             </div>
         </div>
         <div style="margin-top: 15px">
-            <button>↓↓↓↓</button>
-            <button>↑↑↑↑</button>
+            <button data-bind="click: clickAllToMove">↓↓↓↓</button>
+            <button data-bind="click: clickAllToLocation">↑↑↑↑</button>
         </div>
         <div style="margin-top: 15px" data-bind="attr: {class: 'unitList ' + (unitsToMove().length > 7 ? 'unitListWithScroll' : '')}">
             <div data-bind="css: {width: 100 * unitsToMove().length + 'px'}">

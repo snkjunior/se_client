@@ -48,7 +48,12 @@ var Hex = (function(locationId, locationInfo) {
     };
     
     hex.createMoveSprite = function() {
-        var moveSprite = new PIXI.Sprite(game.textures.attack);
+        var texture = game.textures.attack;
+        if (hex.ownerId == game.playerId) {
+            texture = game.textures.move;
+        }
+        
+        var moveSprite = new PIXI.Sprite(texture);
         moveSprite.anchor.set(0.5, 0.5);
         moveSprite.position.set(this.sprite.position.x, this.sprite.position.y);
         

@@ -77,23 +77,17 @@ var Mission = (function(missionData) {
     
     mission.hideButtons = function() {
         for (var buttonName in this.buttons) {
-            console.log(1);
-            this.buttons[buttonName].interactive = false;
-            this.buttons[buttonName].alpha = 0.5;
+            if (buttonName != 'turn') {
+                this.buttons[buttonName].interactive = false;
+                this.buttons[buttonName].alpha = 0.5;
+            }   
         }
     };
     
     mission.updateButtonsVisible = function(buttonsVisible) {
-//        var i = 0;
         for (var buttonName in buttonsVisible) {
             if (!this.buttons[buttonName])
                 continue;
-            
-//            this.buttons[buttonName].visible = buttonsVisible[buttonName];
-//            if (this.buttons[buttonName].visible) {
-//                this.buttons[buttonName].position.set(10, 10 + i * 50);
-//                i++;
-//            }
 
             if (buttonsVisible[buttonName]) {
                 this.buttons[buttonName].interactive = true;
@@ -296,7 +290,7 @@ var Mission = (function(missionData) {
         buttonTurn.click = function() {
             mission.endTurn();
         };
-        mission.buttons.turn = buttonMove;
+        mission.buttons.turn = buttonTurn;
         mapContainer.addChild(buttonTurn);
     };
     

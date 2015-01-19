@@ -65,6 +65,44 @@ game.interfaces.moveUnits = {
         self.selectUnitCountPopup.show(unitId, self.getUnitCountById(unitId, self.unitsInLocation()), self.getUnitCountById(unitId, self.unitsToMove()));
     },
     
+    clickAllToMove: function() {
+        var self = game.currentInterface;
+        for (var i = 0; i < self.unitsInLocation().length; i++) {
+            var isAdd = false;
+            for (var j = 0; j < self.unitsToMove().length; j++) {
+                if (self.unitsInLocation()[i].unitId == self.unitsToMove()[j].unitId) {
+                    self.unitsToMove()[j].count(self.unitsToMove()[j].count() + self.unitsInLocation()[i].count());
+                    isAdd = true;
+                }
+            }
+            
+            if (!isAdd) {
+                self.unitsToMove.push(self.unitsInLocation()[i]);
+            }
+        }
+        self.unitsInLocation([]);
+        self.sortUnitList(self.unitsToMove);
+    },
+    
+    clickAllToLocation: function() {
+        var self = game.currentInterface;
+        for (var i = 0; i < self.unitsToMove().length; i++) {
+            var isAdd = false;
+            for (var j = 0; j < self.unitsInLocation().length; j++) {
+                if (self.unitsInLocation()[j].unitId == self.unitsToMove()[i].unitId) {
+                    self.unitsInLocation()[j].count(self.unitsInLocation()[j].count() + self.unitsToMove()[i].count());
+                    isAdd = true;
+                }
+            }
+            
+            if (!isAdd) {
+                self.unitsInLocation.push(self.unitsToMove()[i]);
+            }
+        }
+        self.unitsToMove([]);
+        self.sortUnitList(self.unitsInLocation);
+    },
+    
     clickApplyUnitsMove: function() {
         var self = game.currentInterface;
         
@@ -135,14 +173,16 @@ game.interfaces.moveUnits = {
             });            
         }
         
-        console.log(1);
+        this.sortUnitList(unitList);       
+    },
+    
+    sortUnitList: function(unitList) {
         unitList().sort(function(a, b) {
             if (a.unitId > b.unitId) {
                 return 1;
             } 
             return -1;
         });
-        
         unitList.valueHasMutated();
     }
 };
