@@ -38,7 +38,10 @@
     <body onload="main()">
         <div align="center" style="position: absolute; width: 1366px; height: 768px;">
             <canvas id="map_canvas" style="display: none" oncontextmenu="return false;"></canvas>
-            <div id="interface" style="position: absolute; top: 0px; left: 0px"></div>
+            <div style="position: absolute; top: 0px; left: 0px">   
+                <div id="interface_bg" style="width: 1366px; height: 768; background-color: #444444; opacity: 0.4; display: none;"></div>
+                <div id="interface" style="position: absolute; display: none;"></div>
+            </div>
         </div>
     </body>
 </html>

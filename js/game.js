@@ -3,9 +3,10 @@ var game = {
     mPlayerId: null,
     gold: ko.observable(500),
     
-    
     mission: null,
     pixi: {
+        width: 1366,
+        height: 768,
         renderer: null,
         stage: null
     },
@@ -40,7 +41,7 @@ game.init = function(playerId) {
     
     this.playerId = playerId;
     this.server.init();
-    this.initPixi(1366, 768);
+    this.initPixi();
     this.loadTextures();
     requestAnimFrame(game.animateFrame);
     
@@ -53,8 +54,8 @@ game.init = function(playerId) {
 //    this.showInterface('buildings', {});
 };
 
-game.initPixi = function(widht, height) {
-    this.pixi.renderer = PIXI.autoDetectRenderer(1366, 768, {view: document.getElementById("map_canvas")});
+game.initPixi = function() {
+    this.pixi.renderer = PIXI.autoDetectRenderer(this.pixi.width, this.pixi.height, {view: document.getElementById("map_canvas")});
     $("#map_canvas").show();
     this.pixi.stage = new PIXI.Stage(0x222222, true);
 };
@@ -113,7 +114,7 @@ game.initTemplates = function() {
     }
 };
 
-game.showInterface = function(interfaceName, params) {
+game.showInterface = function(interfaceName, params) {    
     game.currentInterface = game.interfaces[interfaceName];
     $("#interface").html(game.currentInterface.template);
     game.currentInterface.init(function() {
@@ -121,13 +122,19 @@ game.showInterface = function(interfaceName, params) {
         if (game.currentInterface.onReady != null) {
             game.currentInterface.onReady();
         }
+        $("#interface").css("left", (game.pixi.width - $("#interface").children().width()) / 2 + "px");
+        $("#interface").css("top", (game.pixi.height - $("#interface").children().height()) / 2 + "px");
+        $("#interface_bg").show();
+        $("#interface").show();
     }, params);
 };
 
 game.hideInterface = function() {
+    $("#interface_bg").hide();
+    $("#interface").hide();
     game.currentInterface = null;
     $("#interface").html('');
-}
+};
 
 game.animateFrame = function() {
     requestAnimFrame(game.animateFrame);
