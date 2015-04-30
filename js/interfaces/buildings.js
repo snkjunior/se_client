@@ -120,8 +120,21 @@ game.interfaces.buildings = {
         console.log(1);
         if (game.gold() >= building.price[0].value) {
             console.log(2);
-            self.selectedBuilding(building);
+            if (self.selectedBuilding() == building) {
+                self.selectedBuilding(null);
+            }
+            else {
+                self.selectedBuilding(building);
+            }
         }
+    },
+            
+    clickStartBuilding: function() {
+
+    },
+    
+    clickCloseInterface: function() {
+        game.hideInterface();
     }
 };
 

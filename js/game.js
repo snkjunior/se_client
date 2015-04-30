@@ -5,8 +5,8 @@ var game = {
     
     mission: null,
     pixi: {
-        width: 1366,
-        height: 768,
+        width: 800,
+        height: 600,
         renderer: null,
         stage: null
     },
@@ -45,7 +45,7 @@ game.init = function(playerId) {
     this.loadTextures();
     requestAnimFrame(game.animateFrame);
     
-    var authKey = "asdzx197sdik1pza";
+    var authKey = "asdzx197sdik1pz1";
     if (playerId == 2) {
         authKey = "asdzx197sdik1pz2";        
     }

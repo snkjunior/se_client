@@ -66,12 +66,12 @@ var Mission = (function(missionData) {
     mission.updateMapScale = function() {
         mission.locationsContainer.scale.x = mission.locationsContainer.scale.y = this.scale;
         
-        if (mission.getWidth() <= 1366) {
-            mission.locationsContainer.position.x = (1366 - mission.getWidth()) / 2;
+        if (mission.getWidth() <= game.pixi.width) {
+            mission.locationsContainer.position.x = (game.pixi.width - mission.getWidth()) / 2;
         }
 
-        if (mission.getHeight() <= 768) {
-            mission.locationsContainer.position.y = (768 - mission.getHeight()) / 2;
+        if (mission.getHeight() <= game.pixi.height) {
+            mission.locationsContainer.position.y = (game.pixi.height - mission.getHeight()) / 2;
         }
     };
     
@@ -212,7 +212,7 @@ var Mission = (function(missionData) {
         };
 
         locationsContainer.mousedown = locationsContainer.touchstart = function(data) {
-            if (mission.getWidth() <= 1366 && mission.getHeight() <= 768) { 
+            if (mission.getWidth() <= game.pixi.width && mission.getHeight() <= game.pixi.height) { 
                 return;
             }
 
@@ -234,27 +234,27 @@ var Mission = (function(missionData) {
                 locationsContainer.camera.mouseLastPosition.set(newPosition.x, newPosition.y);
 
                 locationsContainer.position.x = locationsContainer.camera.x;
-                if (locationsContainer.position.x < 1366 - mission.getWidth()) {
-                    locationsContainer.position.x = 1366 - mission.getWidth();
+                if (locationsContainer.position.x < game.pixi.width - mission.getWidth()) {
+                    locationsContainer.position.x = game.pixi.width - mission.getWidth();
                 }
                 if (locationsContainer.position.x > 0) {
                     locationsContainer.position.x = 0;
                 }
 
-                if (mission.getWidth() <= 1366) {
-                    locationsContainer.position.x = (1366 - mission.getWidth()) / 2;
+                if (mission.getWidth() <= game.pixi.width) {
+                    locationsContainer.position.x = (game.pixi.width - mission.getWidth()) / 2;
                 }
 
                 locationsContainer.position.y = locationsContainer.camera.y;
-                if (locationsContainer.position.y < 768 - mission.getHeight()) {
-                    locationsContainer.position.y = 768 - mission.getHeight();
+                if (locationsContainer.position.y < game.pixi.height - mission.getHeight()) {
+                    locationsContainer.position.y = game.pixi.height - mission.getHeight();
                 }
                 if (locationsContainer.position.y > 0) {
                     locationsContainer.position.y = 0;
                 }
 
-                if (mission.getHeight() <= 768) {
-                    locationsContainer.position.y = (768 - mission.getHeight()) / 2;
+                if (mission.getHeight() <= game.pixi.height) {
+                    locationsContainer.position.y = (game.pixi.height - mission.getHeight()) / 2;
                 }
             }
         };
@@ -284,7 +284,7 @@ var Mission = (function(missionData) {
         mapContainer.addChild(buttonMove);
         
         var buttonTurn = new PIXI.Sprite(game.textures.button_turn);
-        buttonTurn.position.set(10, 710);
+        buttonTurn.position.set(10, game.pixi.height - 60);
         buttonTurn.interactive = true;
         buttonTurn.buttonMode = true;
         buttonTurn.click = function() {

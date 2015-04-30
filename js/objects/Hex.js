@@ -143,7 +143,7 @@ var Hex = (function(locationId, locationInfo) {
                     hex.units[mPlayerId][unitId] = 0;
                 }
                 hex.units[mPlayerId][unitId] += playerUnits[mPlayerId][unitId];
-                if (hex.units[mPlayerId][unitId] == 0) {
+                if (hex.units[mPlayerId][unitId] <= 0) {
                     delete hex.units[mPlayerId][unitId];
                 }
             }
